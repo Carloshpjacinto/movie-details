@@ -5,7 +5,7 @@ import { Script } from "vm";
 export async function GET() {
   try {
     const response = await fetch(
-      "https://arquivos.workdoc.com.br/estagio/movieData.js"
+      "https://arquivos.workdoc.com.br/estagio/movieData.js",
     );
     const rawCode = await response.text();
 
@@ -16,7 +16,7 @@ export async function GET() {
     const contextScript: Record<string, any> = {};
     const script = new Script(
       cleanedCode +
-        "\ncontext.search = search;\ncontext.movieDetail = movieDetail;"
+        "\ncontext.search = search;\ncontext.movieDetail = movieDetail;",
     );
     script.runInNewContext({ context: contextScript });
 
@@ -27,7 +27,7 @@ export async function GET() {
   } catch (error: any) {
     return NextResponse.json(
       { error: "Erro ao processar movieData.js: " + error.message },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

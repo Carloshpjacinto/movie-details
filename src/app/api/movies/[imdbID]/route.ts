@@ -1,16 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { Script } from "vm";
 
-export async function GET(
-  _req: Request,
-  context: { params: { imdbID: string } }
-) {
-  const { imdbID } = context.params;
+type Params = {
+  params: {
+    imdbID: string;
+  };
+};
+
+export async function GET(req: NextRequest, { params }: Params) {
+  const { imdbID } = params;
 
   try {
     const response = await fetch(
-      "https://arquivos.workdoc.com.br/estagio/movieData.js"
+      "https://arquivos.workdoc.com.br/estagio/movieData.js",
     );
     const rawCode = await response.text();
 
@@ -21,20 +24,20 @@ export async function GET(
     const contextScript: Record<string, any> = {};
     const script = new Script(
       cleanedCode +
-        "\ncontext.search = search;\ncontext.movieDetail = movieDetail;"
+        "\ncontext.search = search;\ncontext.movieDetail = movieDetail;",
     );
     script.runInNewContext({ context: contextScript });
 
     const movieDetail = contextScript.movieDetail;
 
     const movie = movieDetail.find(
-      (m: any) => m.imdbID?.trim() === imdbID.trim()
+      (m: any) => m.imdbID?.trim() === imdbID.trim(),
     );
 
     if (!movie) {
       return NextResponse.json(
         { error: `Filme com imdbID "${imdbID}" não encontrado.` },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -42,7 +45,7 @@ export async function GET(
   } catch (error: any) {
     return NextResponse.json(
       { error: "Erro ao buscar detalhes: " + error.message },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

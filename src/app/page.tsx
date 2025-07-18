@@ -17,7 +17,7 @@ type MovieDetail = Record<string, any>;
 
 type Data = {
   search: Movie[];
-  movieDetail: MovieDetail[]; // Corrigido aqui
+  movieDetail: MovieDetail[];
 };
 
 export default function Home() {
