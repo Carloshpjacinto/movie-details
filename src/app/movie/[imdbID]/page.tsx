@@ -1,3 +1,5 @@
+import MovieImage from "@/components/MovieImage";
+
 type Params = {
   params: {
     imdbID: string;
@@ -26,15 +28,36 @@ export default async function MovieDetailPage({ params }: Params) {
     <div>
       <h1>{detail.Title}</h1>
       <p>
-        <strong>Ano:</strong> {detail.Year}
+        <strong>Data de lançamento:</strong> {detail.Released}
       </p>
       <p>
-        <strong>Tipo:</strong> {detail.Type}
+        <strong>Duração:</strong> {detail.Runtime}
       </p>
       <p>
         <strong>Descrição:</strong> {detail.Plot || "Sem sinopse."}
       </p>
-      <img src={detail.Poster} alt={detail.Title} width={200} />
+      <ul>
+        {detail?.Ratings.map((ratings: { Source: string; Value: string }) => (
+          <li key={ratings.Source}>
+            <span className="text-blue-600 cursor-pointer">
+              {ratings.Source} ({ratings.Value})
+            </span>
+          </li>
+        ))}
+      </ul>
+      <p>
+        <strong>Atores:</strong> {detail.Actors}
+      </p>
+      <p>
+        <strong>Genêro:</strong> {detail.Genre}
+      </p>
+      <p>
+        <strong>Diretor:</strong> {detail.Director}
+      </p>
+      <p>
+        <strong>Roteirista:</strong> {detail.Writer}
+      </p>
+      <MovieImage src={detail.Poster} alt={detail.Title} />
     </div>
   );
 }

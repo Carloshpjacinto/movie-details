@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import MovieImage from "@/components/MovieImage";
 
 type Movie = {
   Title: string;
@@ -43,13 +44,14 @@ export default function Home() {
   return (
     <div>
       <h1>Filmes</h1>
-      <ul>
+      <ul className="grid grid-flow-col grid-rows-10 gap-4">
         {data?.search.map((movie) => (
           <li key={movie.imdbID}>
             <Link href={`/movie/${movie.imdbID}`}>
               <span className="text-blue-600 hover:underline cursor-pointer">
                 {movie.Title} ({movie.Year})
               </span>
+              <MovieImage src={movie.Poster} alt={movie.Title} />
             </Link>
           </li>
         ))}
