@@ -6,12 +6,14 @@ export default function MovieImage({ src, alt }: { src: string; alt: string }) {
   const [imgSrc, setImgSrc] = useState(src);
 
   return (
-    <Image
-      src={imgSrc}
-      alt={alt}
-      width={300}
-      height={450}
-      onError={() => setImgSrc("/moviveNoImage.png")}
-    />
+    <div>
+      <Image
+        src={imgSrc}
+        alt={alt}
+        width={250}
+        height={250}
+        onError={() => setImgSrc("/moviveNoImage.png")}
+      />
+    </div>
   );
 }

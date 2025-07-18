@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import MovieImage from "@/components/MovieImage";
@@ -43,44 +42,70 @@ export default function MovieDetailPage() {
       });
   }, [imdbID]);
 
-  if (loading) return <p>Carregando...</p>;
-  if (error) return <p>Erro: {error}</p>;
-  if (!detail) return <p>Filme não encontrado.</p>;
+  if (loading) return <p className="text-center text-lg py-8">Carregando...</p>;
+  if (error)
+    return (
+      <p className="text-center text-lg py-8 text-red-600">Erro: {error}</p>
+    );
+  if (!detail)
+    return (
+      <p className="text-center text-lg py-8 text-red-600">
+        Filme não encontrado.
+      </p>
+    );
 
   return (
-    <div>
-      <h1>{detail.Title}</h1>
-      <p>
-        <strong>Data de lançamento:</strong> {detail.Released}
-      </p>
-      <p>
-        <strong>Duração:</strong> {detail.Runtime}
-      </p>
-      <p>
-        <strong>Descrição:</strong> {detail.Plot || "Sem sinopse."}
-      </p>
-      <ul>
-        {detail?.Ratings.map((ratings) => (
-          <li key={ratings.Source}>
-            <span className="text-blue-600 cursor-pointer">
-              {ratings.Source} ({ratings.Value})
-            </span>
-          </li>
-        ))}
-      </ul>
-      <p>
-        <strong>Atores:</strong> {detail.Actors}
-      </p>
-      <p>
-        <strong>Genêro:</strong> {detail.Genre}
-      </p>
-      <p>
-        <strong>Diretor:</strong> {detail.Director}
-      </p>
-      <p>
-        <strong>Roteirista:</strong> {detail.Writer}
-      </p>
-      <MovieImage src={detail.Poster} alt={detail.Title} />
+    <div className="max-w-4xl mx-auto p-6 rounded-lg font-sans text-default mt-20">
+      <h1 className="text-4xl font-bold mb-8 text-center">{detail.Title}</h1>
+
+      <div className="flex flex-col md:flex-row gap-8">
+        <div className="mr-5 mt-10">
+          <MovieImage src={detail.Poster} alt={detail.Title} />
+        </div>
+
+        <div className="flex-1 space-y-4">
+          <p>
+            <strong className="font-semibold">Data de lançamento:</strong>{" "}
+            {detail.Released}
+          </p>
+          <p>
+            <strong className="font-semibold">Duração:</strong> {detail.Runtime}
+          </p>
+          <p>
+            <strong className="font-semibold">Descrição:</strong>{" "}
+            {detail.Plot || "Sem sinopse."}
+          </p>
+
+          <div>
+            <strong className="font-semibold">Avaliações:</strong>
+            <ul className="list-none mt-2 space-y-1">
+              {detail.Ratings.map((rating) => (
+                <li key={rating.Source}>
+                  <span className="text-blue-700 cursor-pointer hover:text-blue-500">
+                    {rating.Source}
+                  </span>{" "}
+                  ({rating.Value})
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <p>
+            <strong className="font-semibold">Atores:</strong> {detail.Actors}
+          </p>
+          <p>
+            <strong className="font-semibold">Genêro:</strong> {detail.Genre}
+          </p>
+          <p>
+            <strong className="font-semibold">Diretor:</strong>{" "}
+            {detail.Director}
+          </p>
+          <p>
+            <strong className="font-semibold">Roteirista:</strong>{" "}
+            {detail.Writer}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
