@@ -1,28 +1,51 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import MovieImage from "@/components/MovieImage";
 
-type Params = {
-  params: {
-    imdbID: string;
-  };
+type MovieDetail = {
+  Title: string;
+  Released: string;
+  Runtime: string;
+  Plot: string;
+  Ratings: { Source: string; Value: string }[];
+  Actors: string;
+  Genre: string;
+  Director: string;
+  Writer: string;
+  Poster: string;
 };
 
-export default async function MovieDetailPage({ params }: Params) {
+export default function MovieDetailPage() {
+  const params = useParams();
   const imdbID = params.imdbID;
 
-  const res = await fetch(`http://localhost:3000/api/movies/${imdbID}`, {
-    cache: "no-store",
-  });
+  const [detail, setDetail] = useState<MovieDetail | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  if (!res.ok) {
-    return (
-      <div>
-        <h1>Detalhes do Filme</h1>
-        <p>Filme não encontrado (status: {res.status})</p>
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (!imdbID) return;
 
-  const detail = await res.json();
+    fetch(`/api/movies/${imdbID}`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Erro: status ${res.status}`);
+        return res.json();
+      })
+      .then((json: MovieDetail) => {
+        setDetail(json);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, [imdbID]);
+
+  if (loading) return <p>Carregando...</p>;
+  if (error) return <p>Erro: {error}</p>;
+  if (!detail) return <p>Filme não encontrado.</p>;
 
   return (
     <div>
@@ -37,7 +60,7 @@ export default async function MovieDetailPage({ params }: Params) {
         <strong>Descrição:</strong> {detail.Plot || "Sem sinopse."}
       </p>
       <ul>
-        {detail?.Ratings.map((ratings: { Source: string; Value: string }) => (
+        {detail?.Ratings.map((ratings) => (
           <li key={ratings.Source}>
             <span className="text-blue-600 cursor-pointer">
               {ratings.Source} ({ratings.Value})
