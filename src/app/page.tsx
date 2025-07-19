@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import MovieImage from "@/components/MovieImage";
@@ -40,7 +42,7 @@ export default function Home() {
       });
   }, []);
 
-  if (loading) return <p className="text-center text-lg py-8">Carregando...</p>;
+  if (loading) return <p>Carregando...</p>;
   if (error) return <p>Erro: {error}</p>;
 
   if (!data) return null;
