@@ -3,7 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 
-const Navbar = () => {
+interface NavbarProps {
+  searchQuery?: string;
+  onSearchChange?: (value: string) => void;
+}
+
+const Navbar = ({ searchQuery = "", onSearchChange }: NavbarProps) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -36,6 +41,9 @@ const Navbar = () => {
             <input
               className="border border-black rounded-full text-black px-4 py-2 mr-25"
               placeholder="Pesquisar..."
+              type="text"
+              value={searchQuery}
+              onChange={(e) => onSearchChange?.(e.target.value)}
             />
           </>
         ) : (

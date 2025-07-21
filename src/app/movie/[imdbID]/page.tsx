@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import MovieImage from "@/components/MovieImage";
+import Navbar from "@/components/Nav";
 
 type MovieDetail = {
   Title: string;
@@ -55,57 +56,61 @@ export default function MovieDetailPage() {
     );
 
   return (
-    <div className="max-w-4xl mx-auto p-6 rounded-lg font-sans text-default mt-20">
-      <h1 className="text-4xl font-bold mb-8 text-center">{detail.Title}</h1>
+    <>
+      <Navbar />
+      <div className="max-w-4xl mx-auto p-6 rounded-lg font-sans text-default mt-20">
+        <h1 className="text-4xl font-bold mb-8 text-center">{detail.Title}</h1>
 
-      <div className="flex flex-col md:flex-row gap-8">
-        <div className="mr-5 mt-10">
-          <MovieImage src={detail.Poster} alt={detail.Title} />
-        </div>
-
-        <div className="flex-1 space-y-4">
-          <p>
-            <strong className="font-semibold">Data de lançamento:</strong>{" "}
-            {detail.Released}
-          </p>
-          <p>
-            <strong className="font-semibold">Duração:</strong> {detail.Runtime}
-          </p>
-          <p>
-            <strong className="font-semibold">Descrição:</strong>{" "}
-            {detail.Plot || "Sem sinopse."}
-          </p>
-
-          <div>
-            <strong className="font-semibold">Avaliações:</strong>
-            <ul className="list-none mt-2 space-y-1">
-              {detail.Ratings.map((rating) => (
-                <li key={rating.Source}>
-                  <span className="text-blue-700 cursor-pointer hover:text-blue-500">
-                    {rating.Source}
-                  </span>{" "}
-                  ({rating.Value})
-                </li>
-              ))}
-            </ul>
+        <div className="flex flex-col md:flex-row gap-8">
+          <div className="mr-5 mt-10">
+            <MovieImage src={detail.Poster} alt={detail.Title} />
           </div>
 
-          <p>
-            <strong className="font-semibold">Atores:</strong> {detail.Actors}
-          </p>
-          <p>
-            <strong className="font-semibold">Genêro:</strong> {detail.Genre}
-          </p>
-          <p>
-            <strong className="font-semibold">Diretor:</strong>{" "}
-            {detail.Director}
-          </p>
-          <p>
-            <strong className="font-semibold">Roteirista:</strong>{" "}
-            {detail.Writer}
-          </p>
+          <div className="flex-1 space-y-4">
+            <p>
+              <strong className="font-semibold">Data de lançamento:</strong>{" "}
+              {detail.Released}
+            </p>
+            <p>
+              <strong className="font-semibold">Duração:</strong>{" "}
+              {detail.Runtime}
+            </p>
+            <p>
+              <strong className="font-semibold">Descrição:</strong>{" "}
+              {detail.Plot || "Sem sinopse."}
+            </p>
+
+            <div>
+              <strong className="font-semibold">Avaliações:</strong>
+              <ul className="list-none mt-2 space-y-1">
+                {detail.Ratings.map((rating) => (
+                  <li key={rating.Source}>
+                    <span className="text-blue-700 cursor-pointer hover:text-blue-500">
+                      {rating.Source}
+                    </span>{" "}
+                    ({rating.Value})
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <p>
+              <strong className="font-semibold">Atores:</strong> {detail.Actors}
+            </p>
+            <p>
+              <strong className="font-semibold">Genêro:</strong> {detail.Genre}
+            </p>
+            <p>
+              <strong className="font-semibold">Diretor:</strong>{" "}
+              {detail.Director}
+            </p>
+            <p>
+              <strong className="font-semibold">Roteirista:</strong>{" "}
+              {detail.Writer}
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
