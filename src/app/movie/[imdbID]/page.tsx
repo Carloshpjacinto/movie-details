@@ -44,7 +44,10 @@ export default function MovieDetailPage() {
       });
   }, [imdbID]);
 
-  if (loading) return <p className="text-center text-[2rem] text-default py-8">Carregando...</p>;
+  if (loading)
+    return (
+      <p className="text-center text-[2rem] text-default py-8">Carregando...</p>
+    );
   if (error || !detail) return <ErrorDetail />;
 
   return (
@@ -82,10 +85,8 @@ export default function MovieDetailPage() {
               <ul className="list-none mt-2 space-y-1">
                 {detail.Ratings.map((rating) => (
                   <li key={rating.Source}>
-                    <span className="text-blue-700 cursor-pointer hover:text-blue-500">
-                      {rating.Source}
-                    </span>{" "}
-                    ({rating.Value})
+                    <span className="text-dourado">{rating.Source}</span> (
+                    {rating.Value})
                   </li>
                 ))}
               </ul>
