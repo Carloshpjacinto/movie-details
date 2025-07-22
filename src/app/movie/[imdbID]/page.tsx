@@ -43,7 +43,7 @@ export default function MovieDetailPage() {
       });
   }, [imdbID]);
 
-  if (loading) return <p className="text-center text-lg py-8">Carregando...</p>;
+  if (loading) return <p className="text-center text-lg py-8"></p>;
   if (error)
     return (
       <p className="text-center text-lg py-8 text-red-600">Erro: {error}</p>

@@ -31,7 +31,6 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(3);
 
-  // Busca inicial (todos os filmes)
   useEffect(() => {
     fetch("/api/movies")
       .then((res) => res.json())
@@ -45,7 +44,6 @@ export default function Home() {
       });
   }, []);
 
-  // Debounce do input
   useEffect(() => {
     const timeout = setTimeout(() => {
       setDebouncedQuery(searchQuery.trim());
@@ -53,10 +51,8 @@ export default function Home() {
     return () => clearTimeout(timeout);
   }, [searchQuery]);
 
-  // Busca por nome do filme
   useEffect(() => {
     if (!debouncedQuery) {
-      // Sem texto => recarrega todos
       fetch("/api/movies")
         .then((res) => res.json())
         .then((json: Data) => {
@@ -87,7 +83,7 @@ export default function Home() {
       });
   }, [debouncedQuery]);
 
-  if (loading) return <p className="text-center text-lg py-8">Carregando...</p>;
+  if (loading) return <p className="text-center text-[2rem] text-default py-8">Carregado...</p>;
   if (error) return <p>Erro: {error}</p>;
   if (!data) return null;
 
