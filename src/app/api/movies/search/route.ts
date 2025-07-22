@@ -9,13 +9,13 @@ export async function GET(req: NextRequest) {
   if (!query) {
     return NextResponse.json(
       { error: "Parâmetro de busca 'q' é obrigatório." },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
   try {
     const response = await fetch(
-      "https://arquivos.workdoc.com.br/estagio/movieData.js"
+      "https://arquivos.workdoc.com.br/estagio/movieData.js",
     );
     const rawCode = await response.text();
 
@@ -29,12 +29,14 @@ export async function GET(req: NextRequest) {
 
     const search = contextScript.search;
 
-    const movies = search.filter((m: any) => m.Title?.toLowerCase().includes(query.toLowerCase()));
+    const movies = search.filter((m: any) =>
+      m.Title?.toLowerCase().includes(query.toLowerCase()),
+    );
 
     if (!movies || movies.length === 0) {
       return NextResponse.json(
         { error: `Nenhum filme encontrado para "${query}".` },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -42,7 +44,7 @@ export async function GET(req: NextRequest) {
   } catch (error: any) {
     return NextResponse.json(
       { error: "Erro ao buscar filmes: " + error.message },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

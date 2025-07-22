@@ -83,7 +83,10 @@ export default function Home() {
       });
   }, [debouncedQuery]);
 
-  if (loading) return <p className="text-center text-[2rem] text-default py-8">Carregado...</p>;
+  if (loading)
+    return (
+      <p className="text-center text-[2rem] text-default py-8">Carregado...</p>
+    );
   if (error) return <p>Erro: {error}</p>;
   if (!data) return null;
 
