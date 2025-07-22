@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import MovieImage from "@/components/MovieImage";
 import Navbar from "@/components/Nav";
+import Preloader from "@/components/Preloader";
 
 type Movie = {
   Title: string;
@@ -83,10 +84,7 @@ export default function Home() {
       });
   }, [debouncedQuery]);
 
-  if (loading)
-    return (
-      <p className="text-center text-[2rem] text-default py-8">Carregado...</p>
-    );
+  if (loading) return <Preloader />;
   if (error) return <p>Erro: {error}</p>;
   if (!data) return null;
 
@@ -120,7 +118,12 @@ export default function Home() {
                     href={`/movie/${movie.imdbID}`}
                     className="flex flex-col items-center mb-15"
                   >
-                    <MovieImage src={movie.Poster} alt={movie.Title} />
+                    <MovieImage
+                      src={movie.Poster}
+                      alt={movie.Title}
+                      width={250}
+                      height={250}
+                    />
                     <p className="text-default hover:underline cursor-pointer mt-5">
                       {movie.Title}
                     </p>

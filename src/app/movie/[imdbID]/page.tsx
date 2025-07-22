@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import MovieImage from "@/components/MovieImage";
 import Navbar from "@/components/Nav";
+import ErrorDetail from "@/components/ErrorDetail";
 
 type MovieDetail = {
   Title: string;
@@ -43,17 +44,8 @@ export default function MovieDetailPage() {
       });
   }, [imdbID]);
 
-  if (loading) return <p className="text-center text-lg py-8">...</p>;
-  if (error)
-    return (
-      <p className="text-center text-lg py-8 text-red-600">Erro: {error}</p>
-    );
-  if (!detail)
-    return (
-      <p className="text-center text-lg py-8 text-red-600">
-        Filme não encontrado.
-      </p>
-    );
+  if (loading) return <p className="text-center text-[2rem] text-default py-8">Carregando...</p>;
+  if (error || !detail) return <ErrorDetail />;
 
   return (
     <>
@@ -63,7 +55,12 @@ export default function MovieDetailPage() {
 
         <div className="flex flex-col md:flex-row gap-8">
           <div className="mr-5 mt-10">
-            <MovieImage src={detail.Poster} alt={detail.Title} />
+            <MovieImage
+              src={detail.Poster}
+              alt={detail.Title}
+              width={250}
+              height={250}
+            />
           </div>
 
           <div className="flex-1 space-y-4">
