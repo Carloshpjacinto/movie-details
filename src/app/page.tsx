@@ -108,7 +108,7 @@ export default function Home() {
       <Navbar searchQuery={searchQuery} onSearchChange={setSearchQuery} />
       <div className="mt-40">
         {currentMovies.length === 0 ? (
-          <p className="text-center text-gray-500">Nenhum filme encontrado.</p>
+          <p className="text-center text-gray-500">Nenhum filme encontrado. </p>
         ) : (
           <>
             <ul className="grid grid-flow-col gap-4 overflow-x-auto">
