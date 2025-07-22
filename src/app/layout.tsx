@@ -28,7 +28,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ProgressProviderWrapper>{children}</ProgressProviderWrapper>
+        <ProgressProviderWrapper> {children} </ProgressProviderWrapper>
       </body>
     </html>
   );
