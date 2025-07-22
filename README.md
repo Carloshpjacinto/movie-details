@@ -30,11 +30,11 @@
 
 ## </> Principais Endpoints da API:
 
-#### GET (GetAll) - /api/movies 
+#### GET (GetAll) - /api/movies
 
 #### GET (GetByImdbID) - /api/movies/[imdbID]
 
-#### GET (GetByTitle) - /api/movies/search 
+#### GET (GetByTitle) - /api/movies/search
 
 Exemplo do Get acima: http://localhost:3000/api/movies/search?title=Star Wars: Episode VIII
 
